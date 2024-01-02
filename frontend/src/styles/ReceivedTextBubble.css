@@ -1,0 +1,32 @@
+.receivedTextBubble {
+  display: flex;
+  flex-direction: column;
+  width: 60%;
+  margin-bottom: 1rem;
+}
+
+.receivedTextBubble .message-box {
+  display: flex;
+  align-items: flex-end;
+}
+
+.receivedTextBubble .message {
+  display: flex;
+  width: 55%;
+  height: fit-content;
+  padding: 1rem;
+  padding-right: 0;
+  align-items: flex-start;
+  border: 0.1rem solid #e9e9eb;
+  background: #e9e9eb;
+  border-radius: 20px;
+  z-index: 1;
+  left: -2rem;
+  position: relative;
+}
+
+.receivedTextBubble .stroke {
+  position: relative;
+  bottom: -0.2rem;
+  z-index: 0;
+}

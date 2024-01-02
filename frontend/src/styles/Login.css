@@ -1,0 +1,154 @@
+.background-icon{
+  position: absolute;
+  left: 0;
+  width: 1440px;
+  height: 816px;
+}
+.button-child,
+.frame-child {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+.frame-child {
+  background-color: var(--color-gray);
+}
+.button-child {
+  border-radius: var(--br-8xs);
+  background-color: #297bca;
+}
+.lets-go {
+  position: absolute;
+  top: calc(50% - 17px);
+  left: calc(50% - 51.5px);
+  letter-spacing: 0.08em;
+  line-height: 35px;
+  font-weight: 800;
+}
+.button {
+  position: absolute;
+  height: 7.41%;
+  width: 73.29%;
+  top: 67.9%;
+  right: 13.71%;
+  bottom: 24.69%;
+  left: 13%;
+}
+.signup-login {
+  position: absolute;
+  top: 66px;
+  left: calc(50% - 200px);
+  font-size: 36px;
+  text-align: center;
+}
+.your-email-id {
+  position: relative;
+  font-weight: 500;
+}
+.your-email-id-wrapper {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+.frame-item {
+  align-self: stretch;
+  position: relative;
+  border-radius: var(--br-8xs);
+  background-color: var(--color-whitesmoke-100);
+  border: 1px solid var(--color-whitesmoke-200);
+  box-sizing: border-box;
+  height: 48px;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+.frame-group,
+.frame-parent {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+.frame-group {
+  width: 390px;
+  justify-content: center;
+  gap: var(--gap-5xs);
+}
+.frame-parent {
+  position: absolute;
+  top: 184px;
+  left: 68px;
+  justify-content: flex-start;
+  gap: 16px;
+  font-size: var(--font-size-base);
+}
+.rectangle-parent {
+  position: absolute;
+  top: calc(50% - 330px);
+  left: calc(50% + 120px);
+  border-radius: 33.34px;
+  box-shadow: var(--vision);
+  -webkit-backdrop-filter: blur(149.14px);
+  backdrop-filter: blur(149.14px);
+  width: 530px;
+  height: 560px;
+  overflow: hidden;
+}
+.group-icon {
+  width: 113px;
+  height: 173.71px;
+  object-fit: cover;
+}
+.group-icon,
+.welcome-to {
+  position: relative;
+}
+.group-parent {
+  position: absolute;
+  top: calc(50% - 230px);
+  left: 92px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  text-align: center;
+  font-size: var(--font-size-29xl);
+}
+.apple-vision-pro-ui {
+  position: relative;
+  background-color: var(--color-white);
+  width: 100%;
+  height: 960px;
+  overflow: hidden;
+  text-align: left;
+  font-size: 20px;
+  color: var(--color-white);
+  font-family: var(--font-poppins);
+}
+
+Button{
+    background-color: transparent;
+    border: none;
+    color: inherit;
+    font-size: inherit;
+    font-weight: inherit;
+    
+}
+
+Input{
+    background-color: transparent;
+    border: none;
+    color: black;
+    font-size: inherit;
+    font-weight: inherit;
+    height: 48px;
+    width: 100%;
+    padding-left: 10px;
+}
+
+Input:focus{
+  outline: none;
+}

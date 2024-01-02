@@ -1,0 +1,33 @@
+.vector-icon {
+    position: absolute;
+    top: -615px;
+    left: 0;
+    width: 90em;
+    /* height: 1920px; */
+    object-fit: cover;
+  }
+  .vector-icon {
+    top: 15.88px;
+    left: 92px;
+    width: 256px;
+    height: 56.24px;
+  }
+  .navbar,
+  .vector-wrapper {
+    position: absolute;
+    width: 1920px;
+    height: 88px;
+  }
+  .vector-wrapper {
+    top: calc(50% - 44px);
+    left: calc(50% - 960px);
+  }
+  .navbar {
+    top: 0;
+    left: 0;
+    background-color: var(--color-gray);
+    backdrop-filter: blur(9.9px);
+    overflow: hidden;
+    z-index: 1;
+    
+  }
