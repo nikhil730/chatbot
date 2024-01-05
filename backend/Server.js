@@ -18,8 +18,7 @@ app.use(express.json());
 app.use(cors());
 
 // Establishing a MongoDB connection
-// const url =
-//   "mongodb+srv://nikhil:.eebuL5tURPiNtx@cluster0.8jqmdrx.mongodb.net/chatboat";
+
 mongoose
   .connect(process.env.url, {
     useNewUrlParser: true,
@@ -46,7 +45,7 @@ const Chats = mongoose.model("Chats", chatSchema);
 
 // Creating a socket connection
 const socket = require("socket.io");
-// const key = "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";
+
 // const configuration = new Configuration({
 //     apiKey: key,
 // });
