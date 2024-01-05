@@ -1,12 +1,19 @@
-import React from "react";
+
+import React, { useEffect, useState } from "react";
 import ReceivedTextBubble from "./ReceivedTextBubble";
 import SentTextBubble from "./SentTextBubble";
+import { useSelector, useDispatch } from "react-redux";
 
 function ChatPrint({ chatList }) {
+  const { user } = useSelector((state) => state.user);
+  useEffect(() => {
+    // Update localChatList when user changes
+  }, [user]);
+  console.log(chatList)
   return (
     <div>
       <div className="chat-container">
-        {chatList.map((chat, index) => {
+        {chatList?.map((chat, index) => {
           return (
             <div
               key={index}

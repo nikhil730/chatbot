@@ -13,55 +13,40 @@ import { Link } from "react-router-dom";
 import Video from "./Video";
 import ChatPrint from "./ChatPrint";
 import { useSelector, useDispatch } from "react-redux";
-import axios from "axios"
+// import axios from "axios"
 
 const TextToSpeech = ({chatList, setChatList, socket}) => {
   
-  const [user,setUser]=useState(null);
+  const { user } = useSelector((state) => state.user);
   const [text, setText] = useState("");
   const [textToSpeak, setTextToSpeak] = useState("");
   //eslint-disable-next-line
-  const getUser = async () => {
-    try {
-      const res = await axios.post(
-        "http://localhost:3000/api/user/getUserData",
-        {
-          token: localStorage.getItem("token"),
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-        }
-      );
-
-      if (res.data.success) {
-        setUser(res.data.user);
-      } else {
-        localStorage.clear();
-      }
-    } catch (error) {
-      localStorage.clear();
-      console.log(error);
-    }
-  };
-
+  const initialChatList = user?.chats || [];
+  const [localChatList, setLocalChatList] = useState(initialChatList);
   useEffect(() => {
-    if (!user) {
-      getUser();
-    }
-  }, [user, getUser]);
-
+    // Update localChatList when user changes
+    setLocalChatList(user?.chats || []);
+  }, [user]);
+  console.log(user)
+  chatList=user?.chats
+  console.log(localChatList)
   // Response from OpenAI is received
+  console.log(user)
   socket.on("receiveMessage", (data) => {
-    const newList = [...chatList, { role: "server", message: data.message }];
+    const newList = [...localChatList];
+    newList.push({
+      role: "server", message: data.message
+    })
     setChatList(newList);
     setTextToSpeak(data.message);
   });
   
   const handleSubmit = () => {
     socket.emit("sendMessage", { text,user });
-    const newList = [...chatList, { role: "client", message: text }];
+    let newList=[];
+    newList =[...localChatList];
+    newList.push({role: "client", message: text})
+    console.log(newList)
     setChatList(newList);
     setText("");
   };

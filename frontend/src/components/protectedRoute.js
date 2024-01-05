@@ -23,9 +23,9 @@ const ProtectedRoute = ({ children }) => {
           },
         }
       );
-
+      console.log(res.data);
       if (res.data.success) {
-        dispatch(setUser(res.data.user));
+        dispatch(setUser(res.data.data));
       } else {
         <Navigate to="/" />;
         localStorage.clear();

@@ -10,6 +10,7 @@ const server = http.createServer(app);
 const axios = require("axios");
 const port = 3000;
 const jwt = require("jsonwebtoken");
+const userModel = require("./models/userModel");
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
@@ -59,11 +60,17 @@ const io = new socket.Server(server, {
 });
 
 // Configuring a socket event handler
-const chatHistory = [];
 io.on("connection", (socket) => {
   socket.on("sendMessage", async (data) => {
     // chatHistory.push({ role: "user", content: data.text });
-    console.log(chatHistory);
+    //console.log(chatHistory);
+    console.log(data);
+
+    // const user = data.user;
+    const user = await userModel.findById({ _id: data.user._id });
+    console.log("User=" + user);
+    const chatHistory = user.chats;
+    console.log("chathist" + chatHistory);
     const response = await axios.post(
       "https://api.openai.com/v1/completions",
       {
@@ -81,9 +88,8 @@ io.on("connection", (socket) => {
         },
       }
     );
-    const user = data.user;
     const completion = response.data.choices[0].text;
-    console.log(completion);
+    //console.log(completion);
     // const chatCompletion = await openai.chat.completions.create({
     //   model: "gpt-3.5-turbo",
     //   messages: chatHistory,
@@ -93,16 +99,15 @@ io.on("connection", (socket) => {
       message: `${completion}`,
     });
     chatHistory.push({
-      from: "user",
-      to: "Ai",
+      role: "client",
       message: data.text,
     });
     chatHistory.push({
-      from: "Ai",
-      to: "user",
+      role: "server",
       message: completion,
     });
-
+    user.chats = chatHistory;
+    user.save();
     // chat.save();
   });
 
@@ -110,82 +115,6 @@ io.on("connection", (socket) => {
     console.log("Disconnected");
   });
 });
-
-app.post("/api/users", async function (req, res) {
-  const { email, password } = req.body;
-  const existingUser = await User.findOne({ email });
-  console.log(password);
-
-  if (existingUser) {
-    console.log("Existing user:", existingUser);
-
-    const passwordMatch = password === existingUser.password;
-    if (passwordMatch) {
-      console.log("Password match", existingUser.password);
-      const token = jwt.sign({ id: existingUser._id }, process.env.JWT_SECRET, {
-        expiresIn: "1d",
-      });
-      res.json({ success: true, user: existingUser, token: token });
-      console.log(token);
-      // Passwords match, user is authenticated
-      return { success: true, user: existingUser, token: token };
-    } else {
-      console.log("Incorret");
-      res.json({ success: false, message: "Incorrect password" });
-      // Passwords don't match
-      return { success: false, message: "Incorrect password" };
-    }
-  } else {
-    const newUser = new User({
-      // id: uuidv4(),
-      email: email,
-      password: password,
-      chats: [],
-    });
-    newUser.save();
-    const token = jwt.sign({ id: newUser._id }, process.env.JWT_SECRET, {
-      expiresIn: "1d",
-    });
-    console.log(token);
-    return { success: true, user: newUser, token: token };
-  }
-});
-app.post("/api/user/getUserData", async function (req, res) {
-  try {
-    let userid = "";
-    const token = req.headers["authorization"].split(" ")[1];
-    jwt.verify(token, process.env.JWT_SECRET, (err, decode) => {
-      if (err) {
-        console.log(err);
-        return res.status(200).send({
-          message: "Auth Failed",
-          success: false,
-        });
-      } else {
-        console.log("decode " + decode.id);
-        userid = decode.id;
-      }
-    });
-    const user = await User.findById({ _id: userid });
-    user.password = undefined;
-    if (!user) {
-      return res
-        .status(200)
-        .send({ message: `User Not Found`, success: false });
-    } else {
-      console.log(user);
-      return {
-        success: true,
-        data: user,
-      };
-    }
-  } catch (error) {
-    console.log(error);
-    return {
-      success: false,
-      message: `Auth Error ${error.message}`,
-    };
-  }
-});
+app.use("/api/user", require("./routes/userRoutes"));
 
 server.listen(port);
