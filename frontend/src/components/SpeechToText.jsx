@@ -20,6 +20,12 @@ const SpeechToText = ({ chatList, setChatList, socket }) => {
   const { user } = useSelector((state) => state.user);
   console.log(user)
   // For speech recognition
+  const initialChatList = user?.chats || [];
+  const [localChatList, setLocalChatList] = useState(initialChatList);
+  useEffect(() => {
+    // Update localChatList when user changes
+    setLocalChatList(user?.chats || []);
+  }, [user]);
   let recognition = null;
   recognition = new window.webkitSpeechRecognition(); // Initialize SpeechRecognition
   recognition.lang = "en-US"; // Set language
@@ -45,14 +51,19 @@ const SpeechToText = ({ chatList, setChatList, socket }) => {
 
   // Response from OpenAI is received
   socket.on("receiveMessage", (data) => {
-    const newList = [...chatList, { role: "server", message: data.message }];
+    const newList = [...localChatList];
+    newList.push({
+      role: "server", message: data.message
+    })
     setChatList(newList);
   });
 
   useEffect(() => {
     if (transcript) {
       socket.emit("sendMessage", { text: transcript });
-      const newList = [...chatList, { role: "client", message: transcript }];
+      let newList=[];
+    newList =[...localChatList];
+    newList.push({role: "client", message: transcript})
       setChatList(newList);
     }
   }, [transcript]);
