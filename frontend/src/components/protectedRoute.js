@@ -13,7 +13,7 @@ const Proute = ({ children }) => {
   const getUser = async () => {
     try {
       const res = await axios.post(
-        "http://localhost:3000/api/user/getUserData",
+        "https://chatbotbackend-u7qu.onrender.com/api/user/getUserData",
         {
           token: localStorage.getItem("token"),
         },

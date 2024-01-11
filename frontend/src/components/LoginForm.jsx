@@ -13,7 +13,7 @@ function LoginForm() {
 
   const handleOnClick = async () => {
     try {
-      const response = await axios.post("http://localhost:3000/api/user/login", {
+      const response = await axios.post("https://chatbotbackend-u7qu.onrender.com/api/user/login", {
         email: email,
         password: password,
         chats: [],
