@@ -5,7 +5,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import TextToSpeech from "./components/TextToSpeech";
 import { useState } from "react";
 import Socket, { socket } from "./components/Socket";
-import Proute from "./components/protectedroute";
+import Proute from "./components/proute";
 
 function App() {
   const [chatList, setChatList] = useState([]);
