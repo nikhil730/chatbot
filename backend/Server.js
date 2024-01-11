@@ -115,5 +115,8 @@ io.on("connection", (socket) => {
   });
 });
 app.use("/api/user", require("./routes/userRoutes"));
+app.get("/", (req, res) => {
+  res.send("server runing");
+});
 
 server.listen(port);
