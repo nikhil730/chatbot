@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
 import { setUser } from "../redux/features/userslice";
 
-const ProtectedRoute = ({ children }) => {
+const Proute = ({ children }) => {
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.user);
 
@@ -48,4 +48,4 @@ const ProtectedRoute = ({ children }) => {
     return <Navigate to="/" />;
   }
 };
-export default ProtectedRoute;
+export default Proute;

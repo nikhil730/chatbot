@@ -5,7 +5,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import TextToSpeech from "./components/TextToSpeech";
 import { useState } from "react";
 import Socket, { socket } from "./components/Socket";
-import ProtectedRoute from "./components/ProtectedRoute";
+import Proute from "./components/protectedroute";
 
 function App() {
   const [chatList, setChatList] = useState([]);
@@ -17,25 +17,25 @@ function App() {
         <Route
           path="/speechToText"
           element={
-            <ProtectedRoute>
+            <Proute>
               <SpeechToText
                 chatList={chatList}
                 setChatList={setChatList}
                 socket={socket}
               />
-            </ProtectedRoute>
+            </Proute>
           }
         />
         <Route
           path="/textToSpeech"
           element={
-            <ProtectedRoute>
+            <Proute>
               <TextToSpeech
                 chatList={chatList}
                 setChatList={setChatList}
                 socket={socket}
               />
-            </ProtectedRoute>
+            </Proute>
           }
         />
       </Routes>
