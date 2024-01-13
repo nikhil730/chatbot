@@ -3,6 +3,7 @@ import { Navigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
 import { setUser } from "../redux/features/userslice";
+import api from "./api";
 
 const Proute = ({ children }) => {
   const dispatch = useDispatch();
@@ -12,8 +13,8 @@ const Proute = ({ children }) => {
   //eslint-disable-next-line
   const getUser = async () => {
     try {
-      const res = await axios.post(
-        "https://chatbotbackend-u7qu.onrender.com/api/user/getUserData",
+      const res = await api.post(
+        "/api/user/getUserData",
         {
           token: localStorage.getItem("token"),
         },

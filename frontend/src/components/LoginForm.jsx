@@ -4,6 +4,7 @@ import { Button, Input } from "@mui/base";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { setUser } from "../redux/features/userslice";
+import api from "./api"
 
 function LoginForm() {
   const dispatch = useDispatch();
@@ -13,7 +14,7 @@ function LoginForm() {
 
   const handleOnClick = async () => {
     try {
-      const response = await axios.post("https://chatbotbackend-u7qu.onrender.com/api/user/login", {
+      const response = await api.post("/api/user/login", {
         email: email,
         password: password,
         chats: [],

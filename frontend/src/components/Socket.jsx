@@ -3,7 +3,7 @@ import ReceivedTextBubble from './ReceivedTextBubble';
 import SentTextBubble from './SentTextBubble';
 import io from "socket.io-client";
 
-const socket = io("https://chatbotbackend-u7qu.onrender.com", {
+const socket = io("http://localhost:3000", {
     path: "/api/socket.io",
   });
 

@@ -5,10 +5,10 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 const mongoose = require("mongoose");
 const app = express();
-const https = require("https");
-const server = https.createServer(app);
+const http = require("http");
+const server = http.createServer(app);
 const axios = require("axios");
-const port = 3000;
+
 const jwt = require("jsonwebtoken");
 const userModel = require("./models/userModel");
 
@@ -18,7 +18,7 @@ app.use(express.json());
 app.use(cors());
 
 // Establishing a MongoDB connection
-
+const port = process.env.port || 3000;
 mongoose
   .connect(process.env.url, {
     useNewUrlParser: true,
@@ -30,18 +30,18 @@ mongoose
   })
   .catch((err) => console.log(err));
 
-const chatSchema = new mongoose.Schema({
-  from: { type: String, required: true },
-  to: { type: String, required: true },
-  message: { type: String, required: true },
-});
-const userSchema = new mongoose.Schema({
-  email: String,
-  password: String,
-  chats: [chatSchema],
-});
-const User = mongoose.model("User", userSchema);
-const Chats = mongoose.model("Chats", chatSchema);
+// const chatSchema = new mongoose.Schema({
+//   from: { type: String, required: true },
+//   to: { type: String, required: true },
+//   message: { type: String, required: true },
+// });
+// const userSchema = new mongoose.Schema({
+//   email: String,
+//   password: String,
+//   chats: [chatSchema],
+// });
+// const User = mongoose.model("User", userSchema);
+// const Chats = mongoose.model("Chats", chatSchema);
 
 // Creating a socket connection
 const socket = require("socket.io");
@@ -52,6 +52,9 @@ const socket = require("socket.io");
 // const openai = new OpenAI({
 //   apiKey: key,
 // });
+app.get("/", (req, res) => {
+  res.send("server runing");
+});
 const io = new socket.Server(server, {
   path: "/api/socket.io",
   cookie: false,
@@ -115,8 +118,5 @@ io.on("connection", (socket) => {
   });
 });
 app.use("/api/user", require("./routes/userRoutes"));
-app.get("/", (req, res) => {
-  res.send("server runing");
-});
 
 server.listen(port);
